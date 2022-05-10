@@ -3,7 +3,8 @@ import AddInfo from './AddInfo'
 import InfoList from './InfoList'
 import { connect } from 'react-redux'
 import PropTypes from "prop-types"
-import { withFirestore } from 'react-redux-firebase'
+import { withFirestore, isLoaded } from 'react-redux-firebase'
+import "firebase/firestore"
 
 class Control extends React.Component{
   constructor(props){
@@ -22,13 +23,22 @@ class Control extends React.Component{
   render(){
     let currentVisibleState = null;
     let buttonText = null;
-
-    if (this.state.addVisible){
-      currentVisibleState = <AddInfo addNewInfo={this.handleClick}/>
-      buttonText="Return to feed"
-    } else {
-      currentVisibleState = <InfoList infoList={this.props.mainInfoList} />
-      buttonText="Upload Info"
+    const auth = this.props.firebase.auth();
+    if (isLoaded(auth) && (auth.currentUser == null)){
+      return (
+        <React.Fragment>
+          <h1>You must be signed in to access the queue.</h1>
+        </React.Fragment>
+      )
+    }
+    if ((isLoaded(auth)) && (auth.currentUser != null)) {
+      if (this.state.addVisible){
+        currentVisibleState = <AddInfo addNewInfo={this.handleClick}/>
+        buttonText="Return to feed"
+      } else {
+        currentVisibleState = <InfoList infoList={this.props.mainInfoList} />
+        buttonText="Upload Info"
+      }  
     }
     return(
       <>

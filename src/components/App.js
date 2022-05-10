@@ -1,13 +1,14 @@
 import React from "react";
-import Header from "./Header";
+import Navbar from "./Navbar"
 import Control from "./Control";
 import SignIn from "./SignIn";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <Router>
-      <Header/>
+      <Navbar/>
       <Switch>
         <Route path="/signin">
           <SignIn />

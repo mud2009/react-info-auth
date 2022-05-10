@@ -3,7 +3,7 @@ import 'firebase/compat/auth'
 import "firebase/compat/firestore"
 import firebase from '../firebase'
 import { isLoaded } from 'react-redux-firebase';
-import { useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 function SignIn() {
   const auth = firebase.auth();
